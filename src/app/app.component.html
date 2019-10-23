@@ -1,1 +1,124 @@
-<router-outlet></router-outlet>
+<div class="window">
+  <header class="toolbar toolbar-header">
+    <h1 class="title">Pictures Management</h1>
+    <div class="toolbar-actions">
+      <div class="btn-group">
+        <button class="btn btn-default" (click)="pathDir()">
+          <span class="icon icon-folder"></span>
+        </button>
+        <button class="btn btn-default" (click)="pathUpload()" [disabled]="!folder.path">
+          <span class="icon icon-floppy"></span>
+        </button>
+      </div>
+
+      <button class="btn btn-positive" (click)="split()" [disabled]="!folder.path || !folderUpload.path">
+        <span class="icon icon-picture icon-text" style="color: white"></span>
+        SPLIT
+      </button>
+
+      <button class="btn btn-warning pull-right" (click)="checkRaw()" [disabled]="!folder.path || !folderUpload.path">
+        <span class="icon icon-shuffle icon-text" style="color: white"></span>
+        CHECK RAW
+      </button>
+    </div>
+  </header>
+
+  <div class="window-content">
+    <div class="pane-group">
+      <div class="pane container">
+        <h3>Information</h3>
+        <div class="grid-half">
+          <p>Your Path: <span>{{folder.path}}</span></p>
+          <p>Total Files: {{folder.total}}</p>
+        </div>
+        <div class="grid-half">
+          <p>Your Path Upload: <span>{{folderUpload.path}}</span></p>
+          <p>Total Folders: {{folderUpload.total}}</p>
+        </div>
+        <div class="cleafix"></div>
+        <hr>
+        <div class="toolbar-actions">
+          <div class="btn-group">
+            <button class="btn btn-default" [ngClass]="{active: currentActive === 0}" (click)="filter(0)">
+              All
+            </button>
+            <button class="btn btn-default" [ngClass]="{active: currentActive === 1}" (click)="filter(1)">
+              Completed
+            </button>
+            <button class="btn btn-default" [ngClass]="{active: currentActive === 2}" (click)="filter(2)">
+              Error
+            </button>
+          </div>
+        </div>
+        <ul>
+          <h3>List of Files</h3>
+          <li *ngIf="listFiles.length === 0">
+            There is no file
+          </li>
+          <li *ngFor="let item of listFilterFiles">
+            <p [ngClass]="{'color-text': item.status, 'danger-text': item.err}">
+              <span *ngIf="item.err" class="icon icon-minus-circled danger-text"></span>
+              <span *ngIf="item.status" class="icon icon icon-check color-text"></span>
+              {{item.name}} - {{item.newPath}}
+            </p>
+            <p *ngIf="item.err" class="danger-text">{{item.err}}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="pane container">
+        <ul class="container">
+          <h3>Result</h3>
+          <b>Success:</b><span> {{statistic.success}}</span><br>
+          <b>Fail:</b><span> {{statistic.fail}}</span>
+          <h6>Divided Folder</h6>
+          <li *ngIf="result.length === 0">
+            No Result
+          </li>
+          <span *ngIf="result.length">Files will be devided into folders: </span>
+          <li *ngFor="let item of result">
+            <p>{{item.path}} - <span class="color-text">{{item.total}} file(s)</span></p>
+          </li>
+        </ul>
+        <div class="container">
+          <h6>Adding Raw Files</h6>
+          <ul>
+            <li *ngFor="let item of rawFiles">
+              <p [ngClass]="{'color-text': item.status, 'danger-text': item.err}">
+                <span *ngIf="item.err" class="icon icon-minus-circled danger-text"></span>
+                <span *ngIf="item.status" class="icon icon icon-check color-text"></span>
+                {{item.name}} - {{item.newPath}}
+              </p>
+              <p *ngIf="item.err" class="danger-text">{{item.err}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- <div style="height: 80vh; overflow: scroll">
+    <div class="window-content">
+      <div class="pane-group">
+        <div class="pane container">
+          
+        </div>
+        <div class="pane container">
+          <p>Your Path Upload: {{folderUpload.path}}</p>
+          <p>Total Folders: {{folderUpload.total}}</p>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <footer class="toolbar toolbar-footer">
+    <div class="toolbar-actions">
+      <!-- <button class="btn btn-default">
+        Cancel
+      </button>
+
+      <button class="btn btn-primary pull-right">
+        Save
+      </button> -->
+      Footer of App
+    </div>
+  </footer>
+</div>

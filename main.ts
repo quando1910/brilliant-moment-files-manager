@@ -2,6 +2,14 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
+const fs = require('fs');
+
+const root = fs.readdirSync('/');
+
+// This will print all files at the root-level of the disk,
+// either '/' or 'C:\'.
+console.log(1234, root);
+
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
